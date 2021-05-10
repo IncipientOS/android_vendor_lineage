@@ -133,4 +133,7 @@
     
     <!-- Turn on dark theme by default -->
     <integer name="config_defaultNightMode">2</integer>
+
+    <!-- Recents text and image selection for Pixel Launcher (not supported by Launcher3) -->
+    <string name="config_defaultContentSuggestionsService" translatable="false">com.google.android.as/com.google.android.apps.miphone.aiai.app.AiAiContentSuggestionsService</string>
 </resources>
