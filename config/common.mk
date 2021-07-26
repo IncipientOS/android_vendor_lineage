@@ -76,6 +76,9 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 # Include AOSP audio files
 include vendor/lineage/config/aosp_audio.mk
 
+# Include Lineage audio files
+include vendor/lineage/config/lineage_audio.mk
+
 ifneq ($(TARGET_DISABLE_LINEAGE_SDK), true)
 # Lineage SDK
 include vendor/lineage/config/lineage_sdk_common.mk
@@ -113,15 +116,6 @@ PRODUCT_PACKAGES += \
     LineageSettingsProvider \
     LineageSetupWizard \
     Updater
-
-# Pixel Sounds
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,vendor/lineage/prebuilt/common/media/audio/,$(TARGET_COPY_OUT_PRODUCT)/media/audio)
-
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.config.ringtone=The_big_adventure.ogg \
-    ro.config.notification_sound=End_note.ogg \
-    ro.config.alarm_alert=Bright_morning.ogg
 
 # Themes
 PRODUCT_PACKAGES += \
