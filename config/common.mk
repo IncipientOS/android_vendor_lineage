@@ -121,6 +121,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     LineageThemesStub \
     ThemePicker
+    
+# Switch themes
+PRODUCT_PACKAGES += \
+    SwitchAOSP \
+    SwitchTelegram \
+    SwitchMD2 \
+    SwitchOOS
 
 # Config
 PRODUCT_PACKAGES += \
