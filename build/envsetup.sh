@@ -20,7 +20,6 @@ Additional LineageOS functions:
 - repopick:        Utility to fetch changes from Gerrit.
 - installboot:     Installs a boot.img to the connected device.
 - installrecovery: Installs a recovery.img to the connected device.
-- incipient:       Setup build environment and compile
 EOF
 }
 
@@ -1024,7 +1023,7 @@ function incipient()
 	
     breakfast $*
     if [ $? -eq 0 ]; then
-        mka incipient
+        mka bacon
     else
         echo "No such item in brunch menu. Try 'breakfast'"
         return 1
