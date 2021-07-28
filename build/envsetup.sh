@@ -20,6 +20,7 @@ Additional LineageOS functions:
 - repopick:        Utility to fetch changes from Gerrit.
 - installboot:     Installs a boot.img to the connected device.
 - installrecovery: Installs a recovery.img to the connected device.
+- incipient:       Setup build environment and compile
 EOF
 }
 
@@ -50,18 +51,6 @@ function mk_timer()
     echo " ####"
     echo
     return $ret
-}
-
-function brunch()
-{
-    breakfast $*
-    if [ $? -eq 0 ]; then
-        mka bacon
-    else
-        echo "No such item in brunch menu. Try 'breakfast'"
-        return 1
-    fi
-    return $?
 }
 
 function breakfast()
@@ -118,7 +107,7 @@ function eat()
 
 function omnom()
 {
-    brunch $*
+    incipient $*
     eat
 }
 
@@ -940,4 +929,105 @@ function fixup_common_out_dir() {
         [ -L ${common_out_dir} ] && rm ${common_out_dir}
         mkdir -p ${common_out_dir}
     fi
+}
+
+function incipient()
+{
+    abt="$ANDROID_BUILD_TOP"
+	cd $abt
+	clean="n"
+	deviceclean="n"
+	export BUILD_VARIANT=vanilla
+	while test $# -gt 0
+	do
+	  case $1 in
+	  # Normal option processing
+		-h | --help)
+		  echo "Usage: $0 options deviceCodename "
+		  echo "options: -h | --help: Shows this dialog"
+		  echo "         -c | --clean: Clean up before running the build"
+		  echo "         -d | --devclean: Clean up device tree before running the build"
+		  echo "         -v | --vanilla: Build with no added app store solution **default option** "
+		  echo "         -f | --foss: build with FOSS (arm64-v8a) app store solutions added"
+		  echo ""
+		  echo "deviceCodename: "
+		  echo "your device codename, without the 'lineage_' in front"
+		  echo ""
+		  ;;
+		-c | --clean)
+		  clean="y";
+		  echo "Cleaning build and device tree selected."
+		  ;;
+		-d | --devclean)
+		  deviceclean="y";
+		  echo "Cleaning device tree selected."
+		  ;;
+		-v | --vanilla)
+		  echo "Building as stock (no gapps) **DEFAULT**"
+		  export BUILD_VARIANT=vanilla
+		  ;;
+		-f | --foss)
+		  echo "Building with FOSS apps for arm64-v8a support"
+		  export BUILD_VARIANT=foss
+		  cd vendor/foss
+		  bash update.sh 2
+		  cd $abt
+		  ;;
+		
+	  # ...
+	  # Special cases
+		--)
+		  echo "Please use --help to verify correct usage"
+		  break
+		  ;;
+		--*)
+		  # error unknown (long) option $1
+		  echo "Please use --help to verify correct usage"
+		  break
+		  ;; 
+		-?)
+		  echo "Please use --help to verify correct usage"
+		  # error unknown (short) option $1
+		  break
+		  ;;
+	  # FUN STUFF HERE:
+	  # Split apart combined short options
+		-*)
+		  split=$1
+		  shift
+		  set -- $(echo "$split" | cut -c 2- | sed 's/./-& /g') "$@"
+		  continue
+		  ;;
+	  # Done with options
+		*)
+		  break
+		  ;;
+	  esac
+	  # for testing purposes:
+	  shift
+	done
+	
+	if [ $clean == "y" ];then
+		echo "Cleaning up a bit"
+		make clean && make clobber
+	fi
+	
+	if [ $deviceclean == "y" ];then
+		echo "Doing some device cleanup"
+		make deviceclean
+	fi
+	
+	if [ "$1" == "" ]; then
+		echo "No device name specified. Please use --help to verify correct usage"
+		return 0
+	fi
+	
+    breakfast $*
+    if [ $? -eq 0 ]; then
+        mka incipient
+    else
+        echo "No such item in brunch menu. Try 'breakfast'"
+        return 1
+    fi
+    return $?
 }

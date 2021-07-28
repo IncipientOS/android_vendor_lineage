@@ -337,5 +337,10 @@ ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),build/target/product/security/testkey)
 endif
 endif
 
+# FOSS Apps
+ifeq ($(BUILD_VARIANT), foss)
+$(call inherit-product, vendor/foss/foss.mk)
+endif
+
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 -include vendor/lineage/config/partner_gms.mk
