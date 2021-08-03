@@ -338,4 +338,6 @@ endif
 endif
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
+# include MindTheGapps inline vendor_gapps
+-include vendor/lineage/config/gms.mk
 -include vendor/lineage/config/partner_gms.mk
