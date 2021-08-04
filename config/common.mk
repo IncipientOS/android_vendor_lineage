@@ -159,6 +159,13 @@ PRODUCT_PACKAGES += \
     sshd_config \
     ssh-keygen \
     start-ssh
+    
+# Volume Panel styles
+PRODUCT_PACKAGES += \
+    AospPanel \
+    CompactPanel \
+    OreoPanel \
+    TiledPanel
 
 # rsync
 PRODUCT_PACKAGES += \
