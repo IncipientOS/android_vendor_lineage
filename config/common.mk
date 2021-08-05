@@ -165,7 +165,10 @@ PRODUCT_PACKAGES += \
     AospPanel \
     CompactPanel \
     OreoPanel \
-    TiledPanel
+    TiledPanel \
+    MiuiCompactPanel \
+    OosPanel \
+    P404Panel
 
 # rsync
 PRODUCT_PACKAGES += \
