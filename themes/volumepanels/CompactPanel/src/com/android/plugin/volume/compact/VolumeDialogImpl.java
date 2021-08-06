@@ -204,7 +204,8 @@ public class VolumeDialogImpl extends PanelSideAware implements VolumeDialog {
         mKeyguard = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
         mActivityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         mShowActiveStreamOnly = showActiveStreamOnly();
-        mHasSeenODICaptionsTooltip = true;
+        mHasSeenODICaptionsTooltip =
+                Prefs.getBoolean(sysuiContext, Prefs.Key.HAS_SEEN_ODI_CAPTIONS_TOOLTIP, false);
         initObserver(pluginContext, sysuiContext);
     }
 
@@ -456,9 +457,9 @@ public class VolumeDialogImpl extends PanelSideAware implements VolumeDialog {
     private void cleanExpandedRows() {
         for (int i = mRows.size() - 1; i >= 0; i--) {
             final VolumeRow row = mRows.get(i);
-            if (row.stream == AudioManager.STREAM_RING
+            if ((row.stream == AudioManager.STREAM_RING
                    || row.stream == AudioManager.STREAM_NOTIFICATION
-                   || row.stream == AudioManager.STREAM_ALARM) {
+                   || row.stream == AudioManager.STREAM_ALARM) && row.stream != mActiveStream) {
                 removeRow(row);
             }
         }
