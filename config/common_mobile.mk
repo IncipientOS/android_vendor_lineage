@@ -17,6 +17,7 @@ PRODUCT_PACKAGES += \
     Backgrounds \
     PulseMusic \
     Messaging \
+    Notes \
     Etar \
     TrichromeChrome	\
     TrichromeWebView	\
