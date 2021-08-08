@@ -344,6 +344,7 @@ ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),build/target/product/security/testkey)
 endif
 endif
 
+-include vendor/prebuilts/packages/apps/Lawnchair/lawnchair.mk
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 # include MindTheGapps inline vendor_gapps
 -include vendor/lineage/config/gms.mk
